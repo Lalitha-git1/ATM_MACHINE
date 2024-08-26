@@ -2,25 +2,28 @@
 #include "atm.h"
 
 void deposit() {
-    int accountnumber, amt, f = 0;
-    printf("\nEnter an account number: ");
+    int accountnumber, amt;
+    printf("Enter account number:\n");
     scanf("%d", &accountnumber);
-    for (int i = 0; i < MAX_ACCOUNTS; i++) {
-        if (A1[i].accountnumber == accountnumber) {
-            f = 1;
-            printf("Name: %s\n", A1[i].name);
-            printf("Enter the amount to deposit: ");
-            scanf("%d", &amt);
-            if (amt < 0) {
-                printf("Invalid amount\n");
-            } else {
-                A1[i].amount += amt;
-                saveAccountsToFile(); // Save accounts after deposit
-            }
+
+    int account_index = -1;
+    for (int i = 0; i < num_accounts; i++) {
+        if (accounts[i].accountnumber == accountnumber) {
+            account_index = i;
             break;
         }
     }
-    if (f == 0) {
-        printf("Invalid account number... please check\n");
+
+    if (account_index == -1) {
+        printf("Account not found.\n");
+        return;
     }
+
+    printf("Enter the amount to deposit:\n");
+    while (scanf("%d", &amt) != 1 || amt < 0) {
+        while (getchar() != '\n');
+        printf("Invalid amount. Please enter a positive integer:\n");
+    }
+    accounts[account_index].amount += amt;
+    printf("Deposit successful!\n");
 }

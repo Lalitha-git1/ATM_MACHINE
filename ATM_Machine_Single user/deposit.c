@@ -3,13 +3,11 @@
 
 void deposit() {
     int amt;
-    printf("Enter the amount to deposit\n");
-    scanf("%d", &amt);
-
-    if (amt < 0) {
-        printf("Invalid amount\n");
-    } else {
-        A1.amount += amt;
-        print_balance(); // Save the updated balance to a file
+    printf("Enter the amount to deposit:\n");
+    while (scanf("%d", &amt) != 1 || amt < 0) {
+        // Clear invalid input
+        while (getchar() != '\n');
+        printf("Invalid amount. Please enter a positive integer:\n");
     }
+    A1.amount += amt;
 }

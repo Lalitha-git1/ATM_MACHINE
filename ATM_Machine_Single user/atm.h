@@ -7,6 +7,7 @@ struct ATM {
     int amount;
 };
 
+// Declaration of the global variable
 extern struct ATM A1;
 
 void atm();
@@ -14,9 +15,10 @@ void createacc();
 void deposit();
 void withd();
 void balance();
-void password();
 void save_account();
 void load_account();
-void print_balance(); // Prototype for printing balance to a file
+void save_balance();
+void load_balance();
+void print_balance();
 
-#endif // ATM_H
+#endif

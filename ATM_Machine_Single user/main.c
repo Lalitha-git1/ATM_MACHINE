@@ -1,7 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <conio.h>
 #include "atm.h"
 #include "balance.c"
 #include "createaccount.c"
@@ -11,44 +8,49 @@
 #include "withdrawl.c"
 #include "filehandling.c"
 
-// Define the ATM structure globally
+
+// Define the global variable
 struct ATM A1;
 
 int main() {
     int choice;
 
-    // Load account data from file at the start
-    load_account();
 
-    // Ask for password before proceeding
+ load_balance();
     password();
 
     do {
-        // Display the ATM menu
         atm();
-        printf("Enter your choice\n");
-        scanf("%d", &choice);
+        printf("Enter your choice (1-5):\n");
+
+        if (scanf("%d", &choice) != 1) {
+            // Clear invalid input
+            while (getchar() != '\n');
+            printf("Invalid input. Please enter a number.\n");
+            continue;
+        }
 
         switch (choice) {
             case 1:
-                createacc(); // Create a new account
-                save_account(); // Save the account data to file
+                createacc();
+                save_account(); // Updated function to save account data
                 break;
             case 2:
-                deposit(); // Deposit money
-                save_account(); // Save the updated account data to file
+                deposit();
+                save_account(); // Updated function to save account data
                 break;
             case 3:
-                withd(); // Withdraw money
-                save_account(); // Save the updated account data to file
+                withd();
+                save_account(); // Updated function to save account data
                 break;
             case 4:
-                balance(); // Check balance
+                balance();
                 break;
             case 5:
-                exit(0); // Exit the program
+                printf("Thank you for using the ATM machine. Exiting...\n");
+                break;
             default:
-                printf("Invalid choice\n");
+                printf("Invalid choice. Please enter a number between 1 and 5.\n");
         }
     } while (choice != 5);
 

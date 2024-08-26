@@ -1,1 +1,3 @@
-Account Number: 5, Balance: 40000
+Account number: 5
+Name: lucky
+Balance: 78000

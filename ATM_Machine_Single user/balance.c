@@ -23,3 +23,21 @@ void print_balance() {
     fprintf(file, "Balance: %d\n", A1.amount);
     fclose(file);  // Close the file
 }
+
+// Function to load balance from a file
+void load_balance() {
+    FILE *file = fopen("balance.txt", "r");  // Open file in text read mode
+    if (file == NULL) {
+        printf("No existing balance data found. Starting with a new account.\n");
+        // Initialize default values if the file doesn't exist
+        A1.accountnumber = 0;
+        snprintf(A1.name, sizeof(A1.name), "Unknown");
+        A1.amount = 0;
+        return;
+    }
+    // Read the account balance data from the file
+    fscanf(file, "Account number: %d\n", &A1.accountnumber);
+    fscanf(file, "Name: %[^\n]\n", A1.name);
+    fscanf(file, "Balance: %d\n", &A1.amount);
+    fclose(file);  // Close the file
+}

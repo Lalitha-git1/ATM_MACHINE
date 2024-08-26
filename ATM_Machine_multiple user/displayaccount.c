@@ -1,9 +1,17 @@
 #include <stdio.h>
 #include "atm.h"
 
-void displayaccount() {
-    printf("\nAccount Number\tName\tBalance\n");
-    for (int i = 0; i < MAX_ACCOUNTS; i++) {
-        printf("%d\t%s\t%d\n", A1[i].accountnumber, A1[i].name, A1[i].amount);
+void display_accounts() {
+    if (num_accounts == 0) {
+        printf("No accounts to display.\n");
+        return;
+    }
+
+    printf("Displaying all accounts:\n");
+    for (int i = 0; i < num_accounts; i++) {
+        printf("Account number: %d\n", accounts[i].accountnumber);
+        printf("Name: %s\n", accounts[i].name);
+        printf("Balance: %d\n", accounts[i].amount);
+        printf("-----------------------------\n");
     }
 }

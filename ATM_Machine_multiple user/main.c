@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <conio.h>
 #include "atm.h"
@@ -9,59 +10,62 @@
 #include "withdrawal.c"
 #include "filehandling.c"
 #include "displayaccount.c"
-#include "global.c"
-
-
-void menu();
+// Define global variables
+struct ATM accounts[MAX_ACCOUNTS];
+int num_accounts = 0;  // Define num_accounts here
 
 int main() {
     int choice;
-    char ch1, ch2, ch3, ch4;
 
-    loadAccountsFromFile(); // Load account details from file at the start
-    loadBalancesFromFile(); // Load balances from file at the start
+    
+    password();
+load_account();
 
-    printf("Enter the password\n");
-    ch1 = getch();
-    printf("*");
-    ch2 = getch();
-    printf("*");
-    ch3 = getch();
-    printf("*");
-    ch4 = getch();
-    printf("*");
+display_accounts();
 
-    if (ch1 == '1' && ch2 == '1' && ch3 == '1' && ch4 == '2') {
-        do {
-            menu();
-            printf("Enter your choice\n");
-            scanf("%d", &choice);
-            switch (choice) {
-                case 1:
-                    createacc();
-                    break;
-                case 2:
-                    deposit();
-                    break;
-                case 3:
-                    withd();
-                    break;
-                case 4:
-                    balance();
-                    break;
-                case 5:
-                    displayaccount();
-                    break;
-                case 6:
-                    saveAccountsToFile(); // Save account details to file before exiting
-                    break;
-                default:
-                    printf("Invalid choice\n");
-            }
-        } while (choice != 6);
-    } else {
-        printf("Invalid PIN.....\n");
-    }
+  save_account();
+
+
+    do {
+        atm();
+        printf("Enter your choice (1-6):\n");
+
+        if (scanf("%d", &choice) != 1) {
+            // Clear invalid input
+            while (getchar() != '\n');
+            printf("Invalid input. Please enter a number.\n");
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                createacc();
+                save_account(); // Save account data after creating an account
+                break;
+            case 2:
+                deposit();
+                save_account(); // Save account data after depositing money
+                break;
+            case 3:
+                withd();
+                save_account(); // Save account data after withdrawing money
+                break;
+            case 4:
+                printf("Enter account number to check balance:\n");
+                int acc_num;
+                scanf("%d", &acc_num);
+                balance(acc_num);
+                break;
+            case 5:
+                display_accounts();  // Display all accounts
+                break;
+            case 6:
+                printf("Thank you for using the ATM machine. Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice. Please enter a number between 1 and 6.\n");
+        }
+    } while (choice != 6);
 
     return 0;
 }
